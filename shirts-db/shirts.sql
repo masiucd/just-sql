@@ -49,3 +49,7 @@ UPDATE shirts SET shirt_size = 'XS', color = 'off white' WHERE color = 'white';
 /* Delete all old shirts
 Last worn 200 days ago */
 DELETE FROM shirts WHERE last_worn = 200;
+
+/* Delete all tank tops
+Your tastes have changed... */
+DELETE FROM shirts WHERE article = 'tank top';
