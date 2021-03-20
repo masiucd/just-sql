@@ -32,15 +32,100 @@ VALUES
 
 /* Concat */
 /* make fullname of the authors */
-SELECT CONCAT(author_fname, ' ' , author_lname) AS full_name #alias
+SELECT CONCAT(author_fname, ' ' , author_lname) AS full_name
 FROM books;
 
+SELECT CONCAT(b.title, " " , b.book_id)
+AS 'title-with-id' FROM books b;
+
+SELECT author_fname AS first, author_lname AS last,
+  CONCAT(author_fname, ' ... ', author_lname) AS full_name
+FROM books;
+
+SELECT
+    CONCAT_WS(' - ', title, author_fname, author_lname)
+FROM books;
 
 /* Substring */
 /* Work With Parts Of Strings */
 
-SELECT SUBSTRING("hello World", 1,4); # hell
+SELECT SUBSTRING("hello World", 1,4); /**hell*/
 
 SELECT SUBSTRING(author_fname,0,2) FROM books;
 
 SELECT CONCAT( SUBSTRING(author_fname,1,1), SUBSTRING(author_lname,1,1) ) AS Initials FROM books;
+
+SELECT CONCAT
+    (
+        SUBSTRING(title, 1, 10),
+        '...'
+    )
+FROM books;
+
+
+/* Replace */
+
+SELECT REPLACE("hello world", "hello","boo"); /*boo world */
+SELECT REPLACE(title, 'The', '') FROM books;
+
+SELECT
+    SUBSTRING(REPLACE(title, 'e', '3'), 1, 10)
+FROM books;
+
+SELECT
+    SUBSTRING(REPLACE(title, 'e', '3'), 1, 10) AS 'weird string'
+FROM books;
+
+/* Rverser */
+SELECT REVERSE("boo");
+
+SELECT CONCAT("not reversed ", b.title, " reversed ", REVERSE(b.title))FROM books b;
+SELECT CONCAT(author_fname, REVERSE(author_fname)) FROM books;
+
+
+/* Char length */
+
+SELECT CHAR_LENGTH('Hello World');
+SELECT b.title FROM books b WHERE CHAR_LENGTH(b.title) > 20;
+SELECT CONCAT(author_lname, ' is ', CHAR_LENGTH(author_lname), ' characters long') FROM books;
+
+/* Upper and lower */
+SELECT UPPER('Hello World');
+
+SELECT LOWER('Hello World');
+
+SELECT UPPER(title) FROM books;
+
+SELECT CONCAT('MY FAVORITE BOOK IS ', UPPER(title)) FROM books;
+
+SELECT CONCAT('MY FAVORITE BOOK IS ', LOWER(title)) FROM books;
+
+
+
+
+/* ***************Challange**************** */
+/* Reverse and Uppercase the following sentence */
+/* "Why does my cat look at me with such hatred?" */
+
+SELECT REVERSE(UPPER("Why does my cat look at me with such hatred?"));
+
+
+/* Replace spaces in titles with '->' */
+
+SELECT REPLACE(b.title, " ", " -> ") AS title FROM books b;
+
+
+
+/* Ppint forward and backwords of authors first name */
+SELECT b.author_fname AS forwards, REVERSE(b.author_lname) AS backwords FROM books b;
+
+/* full name in caps */
+SELECT CONCAT(UPPER(author_fname), " " ,UPPER(author_lname)) AS 'full name in caps' from books;
+
+
+SELECT CONCAT(b.title, " was released in ", b.released_year) AS blurb FROM books b;
+SELECT b.title as title , CHAR_LENGTH(b.title) AS 'char count' FROM books b;
+
+SELECT CONCAT(SUBSTRING(b.title, 1,10),"...") AS short_title,
+	CONCAT(b.author_fname," ",b.author_lname) AS author,
+  CONCAT(b.stock_quantity, " in stock") AS quantity  FROM books b;
