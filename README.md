@@ -39,3 +39,5 @@ SELECT b.title FROM books b WHERE CHAR_LENGTH(b.title) > 20;
 
 SELECT CONCAT(author_lname, ' is ', CHAR_LENGTH(author_lname), ' characters long') FROM books;
 ```
+
+## Aggregate <a name="aggregate"></a>
