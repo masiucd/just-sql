@@ -80,13 +80,13 @@ LEFT JOIN reviews
 ON reviewers.id = reviews.reviewer_id
 GROUP BY  reviewers.id;
 
-SELECT  s.title
-       ,re.`rating`
-       ,r.`first_name` AS reviwer
-FROM `series` s
-LEFT JOIN `reviews` re
-ON s.id = re.`series_id`
-LEFT JOIN `reviewers` r
-ON r.`id` = re.`reviewer_id`
-WHERE re.`rating` IS NOT NULL
-ORDER BY re.`rating` DESC ; 
+SELECT 
+    title,
+    rating,
+    CONCAT(first_name,' ', last_name) AS reviewer
+FROM reviewers
+INNER JOIN reviews 
+    ON reviewers.id = reviews.reviewer_id
+INNER JOIN series
+    ON series.id = reviews.series_id
+ORDER BY title;
