@@ -6,6 +6,7 @@
   <!-- - [Create](#create) -->
   <!-- - [Insert](#insert) -->
 - [Select](#select)
+- [If Null](#ifNull)
 
 ## About <a name = "about"></a>
 
@@ -43,3 +44,18 @@ SELECT CONCAT(author_lname, ' is ', CHAR_LENGTH(author_lname), ' characters long
 <!-- ## Aggregate <a name="aggregate"></a> -->
 
 <!-- ## On delete Cascade -->
+
+## [If Null](#ifNull)
+
+To filter out the null values we can use `IFNULL` function.
+`IFNULL` takes in 2 arguments, the value to check against and what we we want to replace the `null` value with.
+
+```sql
+SELECT p.first_name,p.last_name,
+IFNULL(SUM(o.amount), 0) AS total_spent
+FROM `people` p
+LEFT	JOIN orders o ON p.id = o.`customer_id`
+	GROUP BY p.`id`
+	ORDER BY sum
+	;
+```

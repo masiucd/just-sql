@@ -60,7 +60,7 @@ SELECT * FROM customers
 JOIN orders ON customers.id = orders.id;
 ```
 
-### Left joins
+## Left joins
 
 ```sql
 SELECT * FROM customers
@@ -82,3 +82,18 @@ LEFT JOIN orders
 GROUP BY customers.id
 ORDER BY total_spent;
 ```
+
+---
+
+### Many to many
+
+The way how I like to think about `many to many` reflation work, is to find a real case of scenario in real life.
+for example:
+
+- Books <---> Authors
+- Blog Post <---> Tags
+- Students <---> Classes
+
+A book could have multiple authors and authors can have many books.
+blog post could have many tags and tags can belong to different posts.
+students have multiple classes and classes has multiple students.
