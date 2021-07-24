@@ -47,10 +47,46 @@ LEFT JOIN reviews r
 ON s.`id` = r.`series_id`
 WHERE r.`rating` IS NULL; 
 
-SELECT  s.`genre`
+SELECT  s.`genre` 
        ,AVG(r.`rating`) AS average
 FROM series s
 JOIN reviews r
 ON s.`id` = r.`series_id`
 GROUP BY  s.`genre`
 ORDER BY average DESC ;
+
+SELECT  first_name 
+       ,last_name 
+       ,COUNT(rating)                             AS COUNT 
+       ,Ifnull(MIN(rating),0)                     AS MIN 
+       ,Ifnull(MAX(rating),0)                     AS MAX 
+       ,Round(Ifnull(AVG(rating),0),2)            AS AVG 
+       ,IF(COUNT(rating) > 0,'ACTIVE','INACTIVE') AS STATUS
+FROM reviewers
+LEFT JOIN reviews
+ON reviewers.id = reviews.reviewer_id
+GROUP BY  reviewers.id;
+
+SELECT  first_name 
+       ,last_name 
+       ,COUNT(rating)                                                  AS COUNT 
+       ,Ifnull(MIN(rating),0)                                          AS MIN 
+       ,Ifnull(MAX(rating),0)                                          AS MAX 
+       ,Round(Ifnull(AVG(rating),0),2)                                 AS AVG 
+       ,CASE WHEN COUNT(rating) >= 10 THEN 'POWER USER' 
+             WHEN COUNT(rating) > 0 THEN 'ACTIVE'  ELSE 'INACTIVE' END AS STATUS
+FROM reviewers
+LEFT JOIN reviews
+ON reviewers.id = reviews.reviewer_id
+GROUP BY  reviewers.id;
+
+SELECT  s.title
+       ,re.`rating`
+       ,r.`first_name` AS reviwer
+FROM `series` s
+LEFT JOIN `reviews` re
+ON s.id = re.`series_id`
+LEFT JOIN `reviewers` r
+ON r.`id` = re.`reviewer_id`
+WHERE re.`rating` IS NOT NULL
+ORDER BY re.`rating` DESC ; 
